@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 2% 0;
+}
+.calculator{
+    background: rgb(15, 27, 37);
+    box-shadow: 0px 12px 18px rgb(0 0 0/10%);
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    padding: 2% 0;
+    border-radius: 12px;
+}
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+button{
+    outline: none;
+    border: none;
+    padding: 5%;
+    width: 60px;
+    display: flex;
+    margin: 2%;
+    cursor: pointer;
+    background-color:#2196F3;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.5rem;
+    height: 62px;
+    justify-content: center;
+    align-items: center;
+     border-radius: 10px;
+}
+#display{
+     background-color:#d2d6d3;
+}
+::selection{
+    background-color: rgb(19,19,19);
+}
+textarea{
+    margin: 2% 3%;
+    resize: none;
+    background: none;
+    outline: none;
+    border: none;
+    height: 120px;
+    color: rgb(24, 9, 9);
+    font-size: 3rem;
+}
+button.operator{
+    background: #f69906;
+}
+button.divide:after{
+    content: "÷";
+    position: absolute;
+    background-color: #f69906;
+}
+button.multiply:after{
+    content: "x";
+    position: absolute;
+    background: #f69906;
+}
+</style>
+
+<body>
+    <h1>Basic Calculator</h1>
+    <div class="calculator">
+        <textarea name="" id="display" cols="30" rows="10" disabled ></textarea>
+        <div class="row">
+            <button>AC</button>
+            <button>%</button>
+            <button>&larr;</button>
+            <button class="divide operator">/</button>
+        </div>
+        <div class="row">
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button class="multiply operator">*</button>
+        </div>
+        <div class="row">
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button class="operator">-</button>
+        </div>
+        <div class="row">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button class="operator">+</button>
+        </div>
+        <div class="row">
+            <button>0</button>
+            <button>00</button>
+            <button>.</button>
+            <button class="operator">=</button>
+        </div>
+    </div>
+</body>
+<script>
+    let string = "";
+let buttons = document.querySelectorAll("button")
+Array.from(buttons).forEach((button)=>{
+    button.addEventListener("click",(e)=>{
+        handleInput(e.target.innerText);
+    })
+})
+
+document.addEventListener("keydown", (e) => {
+    const key = e.key;
+    const allowedKeys = [
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+        "+", "-", "*", "/", ".", "%"
+    ];
+
+    if (allowedKeys.includes(key)) {
+        e.preventDefault();
+        handleInput(key);
+    }
+});
+
+function handleInput(input) {
+    const display = document.querySelector("textarea");
+    
+    if (input === "=") {
+        string = eval(string);
+        display.innerText = string;
+    } else if (input === "AC") {
+        string = "";
+        display.innerText = string;
+    } else if (input === "←") {
+        string = string.slice(0, -1);
+        display.innerText = string;
+    } else {
+        string = string + input;
+        display.innerText = string;
+    }
+}
+</script>
+</html>
